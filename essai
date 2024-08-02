@@ -1,9 +1,118 @@
-<html>
- <head>
- </head>
- <body>
-  <script src="https://www.puck-js.com/puck.js"></script>
-  <button onclick="Puck.write('LED1.set();\n');">LED On!</button>
-  <button onclick="Puck.write('LED1.reset();\n');">LED Off!</button>
- </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Consigne experimentale </title>
+    <link rel="stylesheet" href="style.css"> <!--Lien à styles-->
+    <!--https://codepen.io/jayeshdhage/pen/bGBPMxx-->
+</head>
+
+<body>
+    <div> 
+        <h1> Consigne experimentale </h1>
+    </div>
+
+    <div> <!-- Explications  -->
+        <p> 
+            <h3> ETAPE 1 : Identifier la session experimentale </h3>
+              <ul> 
+                <li> Choisissez Identifiant des fichiers </li>
+                <li> Choisissez le Groupe </li>
+                <li> Choisissez la date de la session </li>
+              </ul>
+          </p>
+    </div>
+
+    <div> <!-- Nom dans "Nom"  -->
+        <label> Identifiant du sujet  </label>
+        <input type="text" id="Nom" value="">
+    </div>
+
+    <fieldset> <!-- C'est Groupe qui dit que c est la meme chose   -->
+        <legend> Selectionnez le groupe du sujet :</legend>
+      
+        <div>
+          <input type="radio" id="NT" name="Groupe" value="NT" checked />
+          <label for="NT"> temoin NT </label> <!-- NT c'est id   -->
+        </div>
+      
+        <div>
+          <input type="radio" id="TSA" name="Groupe" value="TSA" />
+          <label for="TSA"> expérimantal TSA </label>
+        </div>
+
+      </fieldset>
+
+
+    <fieldset>
+        <legend> Selectionnez la date de passation :</legend>
+        <div> <!-- Date dans "Date"  -->
+           <label > Date   </label>
+           <input type="date" id="Date" name="Date de passation" value="2024-07-22" min="2024-07-01" max="2028-12-31" />
+        </div>
+    </fieldset>
+
+    <div>
+        <input type="button" id="ButName" value = "Sauver le fichier" onclick="SaveFile()" /> 
+    </div>
+
+    <div>
+      <p> <!-- Associer puck.js  -->
+       <h3> ETAPE 2 : Preparation du materiel </h3>
+       <ul>
+         <li> Inserer la pile dans puck.js.</li> <!-- li = liste  -->
+         <li> Appuyer sur "Connect" </li>
+         <li> Selectionner "puck.js" puis appuyer sur "Associer".</li>
+      </ul>
+      </p>
+      <input class="styled" type="button" value="Connecter" />
+    </div>
+
+    <div>
+      <p> <!-- Passer un essai  -->
+        <h3> ETAPE 3 : Lancer un essai </h3>
+        <ul>
+             <li> Appuyer sur "Lancer essai" .</li> <!-- li = liste  -->
+             <li> Appuyer sur "FIN et enregistrer" </li>
+        </ul>
+      </p>
+      <input class="styled" type="button" value="Lancer essai" /> <br>
+      <p> </p><input class="styled" type="button" value="FIN et enregistrement" /> <br> </p>
+
+    </div>
+
+
+    <script> // script java 
+      
+      function SaveFile(){
+        var nom = document.getElementById("Nom").value; // ca recupere ce qu'il y a ds value
+        var NT = document.getElementById("NT").checked; // 
+        var TSA = document.getElementById("TSA").checked; // 
+        var date = document.getElementById("Date").value; //  
+        //alert("Ton Nom : " + nom + prenom);
+
+        var data = []; // est une liste 
+        data.push(nom); // Nom et prenom de l'interrier de la fonction
+        data.push(NT);
+        data.push(TSA);
+        data.push(date);
+        alert(data)
+
+        var data_string = JSON.stringify(data); // on change liste to string 
+        var file = new Blob([data_string],{type:"text"}); //https://www.youtube.com/watch?v=YYnQjxKYx4k
+
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(file);
+        a.download ="save.text";
+        a.click();
+
+        alert("hi")
+        
+      };
+
+    </script>
+
+</body>
 </html>
